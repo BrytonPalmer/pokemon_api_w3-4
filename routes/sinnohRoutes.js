@@ -1,36 +1,102 @@
 const router = require('express').Router();
 const controller = require('../controllers/sinnohController');
 
-router.get('/', 
-    //#swagger.tags=['Sinnoh Cards']
-    //#swagger.description='Get all Sinnoh cards'
-    controller.getAll
-);
+/* 
+    #swagger.tags = ['Sinnoh Cards']
+    #swagger.summary = 'Get all Sinnoh cards'
+    #swagger.description = 'Returns all Sinnoh region Pokémon cards from the database.'
+    #swagger.responses[200] = {
+        description: 'List of Sinnoh cards',
+        schema: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    _id: { type: 'string' },
+                    name: { type: 'string' },
+                    dexNumber: { type: 'integer' },
+                    type: { type: 'string' },
+                    rarity: { type: 'string' },
+                    setName: { type: 'string' },
+                    hp: { type: 'integer' },
+                    attackName: { type: 'string' },
+                    attackDamage: { type: 'integer' },
+                    description: { type: 'string' },
+                    imageUrl: { type: 'string' }
+                }
+            }
+        }
+    }
+*/
+router.get('/', controller.getAll);
 
-router.get('/:id',
-    //#swagger.tags=['Sinnoh Cards']
-    //#swagger.description='Get a single Sinnoh card'
-    controller.getSingle
-);
+/*
+    #swagger.tags = ['Sinnoh Cards']
+    #swagger.summary = 'Get a Sinnoh card by ID'
+    #swagger.description = 'Returns a single Sinnoh Pokémon card.'
+    #swagger.parameters['id'] = {
+        in: 'path',
+        description: 'MongoDB ObjectId of the card',
+        required: true,
+        type: 'string'
+    }
+    #swagger.responses[200] = {
+        description: 'Sinnoh card retrieved',
+        schema: {
+            type: 'object',
+            properties: {
+                _id: { type: 'string' },
+                name: { type: 'string' },
+                dexNumber: { type: 'integer' },
+                type: { type: 'string' },
+                rarity: { type: 'string' },
+                setName: { type: 'string' },
+                hp: { type: 'integer' },
+                attackName: { type: 'string' },
+                attackDamage: { type: 'integer' },
+                description: { type: 'string' },
+                imageUrl: { type: 'string' }
+            }
+        }
+    }
+*/
+router.get('/:id', controller.getSingle);
 
-router.post('/',
-    //#swagger.tags=['Sinnoh Cards']
-    //#swagger.description='Create a new Sinnoh card'
-    controller.createCard
-);
+/*
+    #swagger.tags = ['Sinnoh Cards']
+    #swagger.summary = 'Create a new Sinnoh card'
+    #swagger.description = 'Adds a new Sinnoh Pokémon card to the database.'
+    #swagger.parameters['body'] = {
+        in: 'body',
+        required: true,
+        schema: {
+            name: 'Turtwig',
+            dexNumber: 387,
+            type: 'Grass',
+            rarity: 'Common',
+            setName: 'Sinnoh Origins',
+            hp: 60,
+            attackName: 'Leaf Blade',
+            attackDamage: 30,
+            description: 'A small Grass-type Pokémon that loves sunlight.',
+            imageUrl: 'https://example.com/turtwig-card.png'
+        }
+    }
+*/
+router.post('/', controller.createCard);
 
-router.put('/:id',
-    //#swagger.tags=['Sinnoh Cards']
-    //#swagger.description='Update a Sinnoh card'
-    controller.updateCard
-);
+/*
+    #swagger.tags = ['Sinnoh Cards']
+    #swagger.summary = 'Update a Sinnoh card'
+    #swagger.description = 'Updates an existing Sinnoh Pokémon card.'
+*/
+router.put('/:id', controller.updateCard);
 
-router.delete('/:id',
-    //#swagger.tags=['Sinnoh Cards']
-    //#swagger.description='Delete a Sinnoh card'
-    controller.deleteCard
-);
+/*
+    #swagger.tags = ['Sinnoh Cards']
+    #swagger.summary = 'Delete a Sinnoh card'
+    #swagger.description = 'Deletes a Sinnoh Pokémon card from the database.'
+*/
+router.delete('/:id', controller.deleteCard);
 
 module.exports = router;
-
-

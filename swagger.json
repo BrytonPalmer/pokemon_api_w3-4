@@ -8,15 +8,26 @@
   "host": "localhost:3030",
   "basePath": "/",
   "schemes": [
-    "http"
+    "http",
+    "https"
   ],
   "paths": {
     "/": {
       "get": {
         "tags": [
-          "National Dex"
+          "Hello World"
         ],
-        "description": "Get all National Dex entries",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/sinnoh/": {
+      "get": {
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"
@@ -27,10 +38,48 @@
         }
       },
       "post": {
-        "tags": [
-          "National Dex"
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "dexNumber": {
+                  "example": "any"
+                },
+                "type": {
+                  "example": "any"
+                },
+                "rarity": {
+                  "example": "any"
+                },
+                "setName": {
+                  "example": "any"
+                },
+                "hp": {
+                  "example": "any"
+                },
+                "attackName": {
+                  "example": "any"
+                },
+                "attackDamage": {
+                  "example": "any"
+                },
+                "description": {
+                  "example": "any"
+                },
+                "imageUrl": {
+                  "example": "any"
+                }
+              }
+            }
+          }
         ],
-        "description": "Create a new National Dex entry",
         "responses": {
           "201": {
             "description": "Created"
@@ -41,42 +90,9 @@
         }
       }
     },
-    "/cards/": {
+    "/sinnoh/{id}": {
       "get": {
-        "tags": [
-          "Sinnoh Cards"
-        ],
-        "description": "Get all Sinnoh cards",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Sinnoh Cards"
-        ],
-        "description": "Create a new Sinnoh card",
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/cards/{id}": {
-      "get": {
-        "tags": [
-          "Sinnoh Cards"
-        ],
-        "description": "Get a single Sinnoh card",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -98,16 +114,52 @@
         }
       },
       "put": {
-        "tags": [
-          "Sinnoh Cards"
-        ],
-        "description": "Update a Sinnoh card",
+        "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "dexNumber": {
+                  "example": "any"
+                },
+                "type": {
+                  "example": "any"
+                },
+                "rarity": {
+                  "example": "any"
+                },
+                "setName": {
+                  "example": "any"
+                },
+                "hp": {
+                  "example": "any"
+                },
+                "attackName": {
+                  "example": "any"
+                },
+                "attackDamage": {
+                  "example": "any"
+                },
+                "description": {
+                  "example": "any"
+                },
+                "imageUrl": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -123,10 +175,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Sinnoh Cards"
-        ],
-        "description": "Delete a Sinnoh card",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -148,12 +197,9 @@
         }
       }
     },
-    "/decks/": {
+    "/national/": {
       "get": {
-        "tags": [
-          "National Dex"
-        ],
-        "description": "Get all National Dex entries",
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"
@@ -164,26 +210,17 @@
         }
       },
       "post": {
-        "tags": [
-          "National Dex"
-        ],
-        "description": "Create a new National Dex entry",
+        "description": "",
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "default": {
+            "description": ""
           }
         }
       }
     },
-    "/decks/{id}": {
+    "/national/{id}": {
       "get": {
-        "tags": [
-          "National Dex"
-        ],
-        "description": "Get a single National Dex entry",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -205,10 +242,7 @@
         }
       },
       "put": {
-        "tags": [
-          "National Dex"
-        ],
-        "description": "Update a National Dex entry",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -218,22 +252,13 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "default": {
+            "description": ""
           }
         }
       },
       "delete": {
-        "tags": [
-          "National Dex"
-        ],
-        "description": "Delete a National Dex entry",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -243,91 +268,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/{id}": {
-      "get": {
-        "tags": [
-          "National Dex"
-        ],
-        "description": "Get a single National Dex entry",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "National Dex"
-        ],
-        "description": "Update a National Dex entry",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "National Dex"
-        ],
-        "description": "Delete a National Dex entry",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "default": {
+            "description": ""
           }
         }
       }

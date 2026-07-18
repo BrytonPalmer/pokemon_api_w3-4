@@ -4,8 +4,12 @@ const ObjectId = require('mongodb').ObjectId;
 // GET all Sinnoh cards
 const getAll = async (req, res) => {
   try {
-    const result = await mongodb.getDatabase().db().collection('SinnohCards').find();
-    const cards = await result.toArray();
+    const cards = await mongodb.getDatabase()
+      .db()
+      .collection('SinnohCards')
+      .find({})
+      .toArray();
+
     res.status(200).json(cards);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -16,14 +20,17 @@ const getAll = async (req, res) => {
 const getSingle = async (req, res) => {
   try {
     const cardId = new ObjectId(req.params.id);
-    const result = await mongodb.getDatabase().db().collection('SinnohCards').find({ _id: cardId });
-    const cards = await result.toArray();
 
-    if (!cards[0]) {
+    const card = await mongodb.getDatabase()
+      .db()
+      .collection('SinnohCards')
+      .findOne({ _id: cardId });
+
+    if (!card) {
       return res.status(404).json({ message: 'Card not found' });
     }
 
-    res.status(200).json(cards[0]);
+    res.status(200).json(card);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -32,9 +39,23 @@ const getSingle = async (req, res) => {
 // CREATE Sinnoh card
 const createCard = async (req, res) => {
   try {
-    const card = req.body;
+    const card = {
+      name: req.body.name,
+      dexNumber: req.body.dexNumber,
+      type: req.body.type,
+      rarity: req.body.rarity,
+      setName: req.body.setName,
+      hp: req.body.hp,
+      attackName: req.body.attackName,
+      attackDamage: req.body.attackDamage,
+      description: req.body.description,
+      imageUrl: req.body.imageUrl
+    };
 
-    const response = await mongodb.getDatabase().db().collection('SinnohCards').insertOne(card);
+    const response = await mongodb.getDatabase()
+      .db()
+      .collection('SinnohCards')
+      .insertOne(card);
 
     res.status(201).json(response);
   } catch (err) {
@@ -46,12 +67,24 @@ const createCard = async (req, res) => {
 const updateCard = async (req, res) => {
   try {
     const cardId = new ObjectId(req.params.id);
-    const card = req.body;
 
-    const response = await mongodb.getDatabase().db().collection('SinnohCards').updateOne(
-      { _id: cardId },
-      { $set: card }
-    );
+    const card = {
+      name: req.body.name,
+      dexNumber: req.body.dexNumber,
+      type: req.body.type,
+      rarity: req.body.rarity,
+      setName: req.body.setName,
+      hp: req.body.hp,
+      attackName: req.body.attackName,
+      attackDamage: req.body.attackDamage,
+      description: req.body.description,
+      imageUrl: req.body.imageUrl
+    };
+
+    const response = await mongodb.getDatabase()
+      .db()
+      .collection('SinnohCards')
+      .replaceOne({ _id: cardId }, card);
 
     if (response.modifiedCount > 0) {
       return res.status(200).json(response);
@@ -67,7 +100,11 @@ const updateCard = async (req, res) => {
 const deleteCard = async (req, res) => {
   try {
     const cardId = new ObjectId(req.params.id);
-    const response = await mongodb.getDatabase().db().collection('SinnohCards').deleteOne({ _id: cardId });
+
+    const response = await mongodb.getDatabase()
+      .db()
+      .collection('SinnohCards')
+      .deleteOne({ _id: cardId });
 
     if (response.deletedCount > 0) {
       return res.status(200).json({ message: 'Card deleted' });

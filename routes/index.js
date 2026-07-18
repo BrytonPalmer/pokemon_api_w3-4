@@ -6,10 +6,10 @@ router.get('/', (req, res) => {
 });
 
 // Cards routes
-router.use('/cards', require('./sinnohRoutes'));
+router.use('/sinnoh', require('./sinnohRoutes'));
 
 // Decks routes
-router.use('/decks', require('./nationalDexRoutes'));
+router.use('/national', require('./nationalDexRoutes'));
 
 // Swagger route
 router.use('/', require('../swagger'));
