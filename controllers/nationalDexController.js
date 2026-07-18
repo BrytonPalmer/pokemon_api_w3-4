@@ -4,7 +4,7 @@ const ObjectId = require('mongodb').ObjectId;
 // GET all National Dex cards
 const getAll = async (req, res) => {
   try {
-    const result = await mongodb.getDatabase().db().collection('nationalDexCards').find();
+    const result = await mongodb.getDatabase().db().collection('NationalDexCards').find();
     const dex = await result.toArray();
     res.status(200).json(dex);
   } catch (err) {
@@ -16,7 +16,7 @@ const getAll = async (req, res) => {
 const getSingle = async (req, res) => {
   try {
     const dexId = new ObjectId(req.params.id);
-    const result = await mongodb.getDatabase().db().collection('nationalDexCards').find({ _id: dexId });
+    const result = await mongodb.getDatabase().db().collection('NationalDexCards').find({ _id: dexId });
     const dex = await result.toArray();
 
     if (!dex[0]) {
@@ -34,7 +34,7 @@ const createDex = async (req, res) => {
   try {
     const dex = req.body;
 
-    const response = await mongodb.getDatabase().db().collection('nationalDexCards').insertOne(dex);
+    const response = await mongodb.getDatabase().db().collection('NationalDexCards').insertOne(dex);
 
     res.status(201).json(response);
   } catch (err) {
@@ -48,7 +48,7 @@ const updateDex = async (req, res) => {
     const dexId = new ObjectId(req.params.id);
     const dex = req.body;
 
-    const response = await mongodb.getDatabase().db().collection('nationalDexCards').updateOne(
+    const response = await mongodb.getDatabase().db().collection('NationalDexCards').updateOne(
       { _id: dexId },
       { $set: dex }
     );
@@ -67,7 +67,7 @@ const updateDex = async (req, res) => {
 const deleteDex = async (req, res) => {
   try {
     const dexId = new ObjectId(req.params.id);
-    const response = await mongodb.getDatabase().db().collection('nationalDexCards').deleteOne({ _id: dexId });
+    const response = await mongodb.getDatabase().db().collection('NationalDexCards').deleteOne({ _id: dexId });
 
     if (response.deletedCount > 0) {
       return res.status(200).json({ message: 'Dex entry deleted' });

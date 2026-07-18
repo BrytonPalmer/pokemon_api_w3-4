@@ -4,7 +4,7 @@ const ObjectId = require('mongodb').ObjectId;
 // GET all Sinnoh cards
 const getAll = async (req, res) => {
   try {
-    const result = await mongodb.getDatabase().db().collection('sinnohCards').find();
+    const result = await mongodb.getDatabase().db().collection('SinnohCards').find();
     const cards = await result.toArray();
     res.status(200).json(cards);
   } catch (err) {
@@ -16,7 +16,7 @@ const getAll = async (req, res) => {
 const getSingle = async (req, res) => {
   try {
     const cardId = new ObjectId(req.params.id);
-    const result = await mongodb.getDatabase().db().collection('sinnohCards').find({ _id: cardId });
+    const result = await mongodb.getDatabase().db().collection('SinnohCards').find({ _id: cardId });
     const cards = await result.toArray();
 
     if (!cards[0]) {
@@ -34,7 +34,7 @@ const createCard = async (req, res) => {
   try {
     const card = req.body;
 
-    const response = await mongodb.getDatabase().db().collection('sinnohCards').insertOne(card);
+    const response = await mongodb.getDatabase().db().collection('SinnohCards').insertOne(card);
 
     res.status(201).json(response);
   } catch (err) {
@@ -48,7 +48,7 @@ const updateCard = async (req, res) => {
     const cardId = new ObjectId(req.params.id);
     const card = req.body;
 
-    const response = await mongodb.getDatabase().db().collection('sinnohCards').updateOne(
+    const response = await mongodb.getDatabase().db().collection('SinnohCards').updateOne(
       { _id: cardId },
       { $set: card }
     );
@@ -67,7 +67,7 @@ const updateCard = async (req, res) => {
 const deleteCard = async (req, res) => {
   try {
     const cardId = new ObjectId(req.params.id);
-    const response = await mongodb.getDatabase().db().collection('sinnohCards').deleteOne({ _id: cardId });
+    const response = await mongodb.getDatabase().db().collection('SinnohCards').deleteOne({ _id: cardId });
 
     if (response.deletedCount > 0) {
       return res.status(200).json({ message: 'Card deleted' });
