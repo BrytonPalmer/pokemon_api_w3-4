@@ -74,20 +74,20 @@ router.get('/:id', controller.getSingle);
         }
     }
 */
-router.post('/', controller.createCard);
+router.post('/', controller.createDex);
 
 /*
     #swagger.tags = ['National Dex Cards']
     #swagger.summary = 'Update a National Dex card'
     #swagger.description = 'Updates an existing National Dex Pokémon card.'
 */
-router.put('/:id', controller.updateCard);
+router.put('/:id', controller.updateDex);
 
 /*
     #swagger.tags = ['National Dex Cards']
     #swagger.summary = 'Delete a National Dex card'
     #swagger.description = 'Deletes a National Dex Pokémon card from the database.'
 */
-router.delete('/:id', controller.deleteCard);
+router.delete('/:id', controller.deleteDex);
 
 module.exports = router;
