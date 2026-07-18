@@ -5,10 +5,9 @@
     "description": "Sinnoh Cards + National Dex API",
     "version": "1.0.0"
   },
-  "host": "localhost:3030",
+  "host": "pokemon-api-w3-4.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http",
     "https"
   ],
   "paths": {

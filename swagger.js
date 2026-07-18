@@ -13,9 +13,7 @@ const doc = {
 };
 
 const outputFile = './swagger.json';
-const endpointsFiles = [
-    './routes/index.js'
-];
+const endpointsFiles = ['./routes/index.js'];
 
 // Generate swagger.json if it doesn't exist
 swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
