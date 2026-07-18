@@ -1,5 +1,10 @@
+
+
+
 const dotenv = require('dotenv');
 dotenv.config();
+
+console.log("LOCAL DB URL:", process.env.MONGODB_URL);
 
 const MongoClient = require('mongodb').MongoClient;
 
