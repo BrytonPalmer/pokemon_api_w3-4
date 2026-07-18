@@ -8,7 +8,7 @@ const doc = {
         title: 'Pokemon Platinum API',
         description: 'Sinnoh Cards + National Dex API'
     },
-    host: process.env.RENDER_EXTERNAL_URL || 'localhost:3030',
+    host: 'localhost:3030',
     schemes: ['http', 'https']
 };
 
