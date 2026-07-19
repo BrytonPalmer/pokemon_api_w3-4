@@ -5,7 +5,7 @@ const ObjectId = require('mongodb').ObjectId;
 const getAll = async (req, res) => {
   try {
     const result = await mongodb.getDatabase()
-      .db()
+      .db('PokemonPlatnium')
       .collection('NationalDexCards')
       .find({})
       .toArray();
@@ -22,7 +22,7 @@ const getSingle = async (req, res) => {
     const dexId = new ObjectId(req.params.id);
 
     const result = await mongodb.getDatabase()
-      .db()
+      .db('PokemonPlatnium')
       .collection('NationalDexCards')
       .findOne({ _id: dexId });
 
@@ -50,7 +50,7 @@ const createDex = async (req, res) => {
     };
 
     const response = await mongodb.getDatabase()
-      .db()
+      .db('PokemonPlatnium')
       .collection('NationalDexCards')
       .insertOne(dex);
 
@@ -76,7 +76,7 @@ const updateDex = async (req, res) => {
     };
 
     const response = await mongodb.getDatabase()
-      .db()
+      .db('PokemonPlatnium')
       .collection('NationalDexCards')
       .replaceOne({ _id: dexId }, dex);
 
@@ -96,7 +96,7 @@ const deleteDex = async (req, res) => {
     const dexId = new ObjectId(req.params.id);
 
     const response = await mongodb.getDatabase()
-      .db()
+      .db('PokemonPlatnium')
       .collection('NationalDexCards')
       .deleteOne({ _id: dexId });
 

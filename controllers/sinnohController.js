@@ -5,7 +5,7 @@ const ObjectId = require('mongodb').ObjectId;
 const getAll = async (req, res) => {
   try {
     const cards = await mongodb.getDatabase()
-      .db()
+      .db('PokemonPlatnium')
       .collection('SinnohCards')
       .find({})
       .toArray();
@@ -22,7 +22,7 @@ const getSingle = async (req, res) => {
     const cardId = new ObjectId(req.params.id);
 
     const card = await mongodb.getDatabase()
-      .db()
+      .db('PokemonPlatnium')
       .collection('SinnohCards')
       .findOne({ _id: cardId });
 
@@ -53,7 +53,7 @@ const createCard = async (req, res) => {
     };
 
     const response = await mongodb.getDatabase()
-      .db()
+      .db('PokemonPlatnium')
       .collection('SinnohCards')
       .insertOne(card);
 
@@ -82,7 +82,7 @@ const updateCard = async (req, res) => {
     };
 
     const response = await mongodb.getDatabase()
-      .db()
+      .db('PokemonPlatnium')
       .collection('SinnohCards')
       .replaceOne({ _id: cardId }, card);
 
@@ -102,7 +102,7 @@ const deleteCard = async (req, res) => {
     const cardId = new ObjectId(req.params.id);
 
     const response = await mongodb.getDatabase()
-      .db()
+      .db('PokemonPlatnium')
       .collection('SinnohCards')
       .deleteOne({ _id: cardId });
 
