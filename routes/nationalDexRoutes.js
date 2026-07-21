@@ -1,6 +1,11 @@
 const router = require('express').Router();
 const controller = require('../controllers/nationalDexController');
-
+const validate = require('../middleware/validate');
+const { nationalDexSchema } = require('../validation/nationalDexValidation');
+const authenticate = require('../middleware/authenticate');
+const authorize = require('../middleware/authorize');
+const validateObjectId = require('../middleware/validateObjectId');
+ 
 /*
     #swagger.tags = ['National Dex Cards']
     #swagger.summary = 'Get all National Dex cards'
@@ -26,7 +31,7 @@ const controller = require('../controllers/nationalDexController');
     }
 */
 router.get('/', controller.getAll);
-
+ 
 /*
     #swagger.tags = ['National Dex Cards']
     #swagger.summary = 'Get a National Dex card by ID'
@@ -54,12 +59,12 @@ router.get('/', controller.getAll);
         }
     }
 */
-router.get('/:id', controller.getSingle);
-
+router.get('/:id', validateObjectId, controller.getSingle);
+ 
 /*
     #swagger.tags = ['National Dex Cards']
     #swagger.summary = 'Create a new National Dex card'
-    #swagger.description = 'Adds a new National Dex Pokémon card to the database.'
+    #swagger.description = 'Adds a new National Dex Pokémon card to the database. Requires admin role.'
     #swagger.parameters['body'] = {
         in: 'body',
         required: true,
@@ -74,20 +79,20 @@ router.get('/:id', controller.getSingle);
         }
     }
 */
-router.post('/', controller.createDex);
-
+router.post('/', authenticate, authorize('admin'), validate(nationalDexSchema), controller.createDex);
+ 
 /*
     #swagger.tags = ['National Dex Cards']
     #swagger.summary = 'Update a National Dex card'
-    #swagger.description = 'Updates an existing National Dex Pokémon card.'
+    #swagger.description = 'Updates an existing National Dex Pokémon card. Requires admin role.'
 */
-router.put('/:id', controller.updateDex);
-
+router.put('/:id', authenticate, authorize('admin'), validateObjectId, validate(nationalDexSchema), controller.updateDex);
+ 
 /*
     #swagger.tags = ['National Dex Cards']
     #swagger.summary = 'Delete a National Dex card'
-    #swagger.description = 'Deletes a National Dex Pokémon card from the database.'
+    #swagger.description = 'Deletes a National Dex Pokémon card from the database. Requires admin role.'
 */
-router.delete('/:id', controller.deleteDex);
-
+router.delete('/:id', authenticate, authorize('admin'), validateObjectId, controller.deleteDex);
+ 
 module.exports = router;

@@ -1,6 +1,14 @@
+
+
 const router = require('express').Router();
 const controller = require('../controllers/sinnohController');
-
+const validate = require('../middleware/validate');
+const { cardSchema } = require('../validation/cardValidation');
+const authenticate = require('../middleware/authenticate');
+const authorize = require('../middleware/authorize');
+const validateObjectId = require('../middleware/validateObjectId');
+const validateObjectId = require('../middleware/validateObjectId');
+ 
 /* 
     #swagger.tags = ['Sinnoh Cards']
     #swagger.summary = 'Get all Sinnoh cards'
@@ -29,7 +37,7 @@ const controller = require('../controllers/sinnohController');
     }
 */
 router.get('/', controller.getAll);
-
+ 
 /*
     #swagger.tags = ['Sinnoh Cards']
     #swagger.summary = 'Get a Sinnoh card by ID'
@@ -60,12 +68,12 @@ router.get('/', controller.getAll);
         }
     }
 */
-router.get('/:id', controller.getSingle);
-
+router.get('/:id', validateObjectId, controller.getSingle);
+ 
 /*
     #swagger.tags = ['Sinnoh Cards']
     #swagger.summary = 'Create a new Sinnoh card'
-    #swagger.description = 'Adds a new Sinnoh Pokémon card to the database.'
+    #swagger.description = 'Adds a new Sinnoh Pokémon card to the database. Requires authentication.'
     #swagger.parameters['body'] = {
         in: 'body',
         required: true,
@@ -83,20 +91,20 @@ router.get('/:id', controller.getSingle);
         }
     }
 */
-router.post('/', controller.createCard);
-
+router.post('/', authenticate, authorize('admin'), validate(cardSchema), controller.createCard);
+ 
 /*
     #swagger.tags = ['Sinnoh Cards']
     #swagger.summary = 'Update a Sinnoh card'
-    #swagger.description = 'Updates an existing Sinnoh Pokémon card.'
+    #swagger.description = 'Updates an existing Sinnoh Pokémon card. Requires authentication.'
 */
-router.put('/:id', controller.updateCard);
-
+router.put('/:id', authenticate, authorize('admin'), validateObjectId, validate(cardSchema), controller.updateCard);
+ 
 /*
     #swagger.tags = ['Sinnoh Cards']
     #swagger.summary = 'Delete a Sinnoh card'
-    #swagger.description = 'Deletes a Sinnoh Pokémon card from the database.'
+    #swagger.description = 'Deletes a Sinnoh Pokémon card from the database. Requires admin role.'
 */
-router.delete('/:id', controller.deleteCard);
-
+router.delete('/:id', authenticate, authorize('admin'), validateObjectId, controller.deleteCard);
+ 
 module.exports = router;

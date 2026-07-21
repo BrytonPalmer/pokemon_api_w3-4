@@ -20,7 +20,7 @@ const register = async (req, res) => {
       username,
       email,
       password: hashedPassword,
-      role: role === 'admin' ? 'admin' : 'user', // default to 'user' unless explicitly admin
+      role: 'user',
       createdAt: new Date()
     };
 
