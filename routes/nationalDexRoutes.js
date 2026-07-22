@@ -29,6 +29,7 @@ const validateObjectId = require('../middleware/validateObjectId');
             }
         }
     }
+    #swagger.responses[500] = { description: 'Internal Server Error' }
 */
 router.get('/', controller.getAll);
  
@@ -58,6 +59,9 @@ router.get('/', controller.getAll);
             }
         }
     }
+    #swagger.responses[400] = { description: 'Invalid ID format' }
+    #swagger.responses[404] = { description: 'Dex entry not found' }
+    #swagger.responses[500] = { description: 'Internal Server Error' }
 */
 router.get('/:id', validateObjectId, controller.getSingle);
  
@@ -78,6 +82,11 @@ router.get('/:id', validateObjectId, controller.getSingle);
             description: 'It has the ability to distort space. It is said to live in a gap in the spatial dimension.'
         }
     }
+    #swagger.responses[201] = { description: 'Dex entry created' }
+    #swagger.responses[400] = { description: 'Validation error' }
+    #swagger.responses[401] = { description: 'Not authenticated' }
+    #swagger.responses[403] = { description: 'Not authorized (admin only)' }
+    #swagger.responses[500] = { description: 'Internal Server Error' }
 */
 router.post('/', authenticate, authorize('admin'), validate(nationalDexSchema), controller.createDex);
  
@@ -85,6 +94,18 @@ router.post('/', authenticate, authorize('admin'), validate(nationalDexSchema), 
     #swagger.tags = ['National Dex Cards']
     #swagger.summary = 'Update a National Dex card'
     #swagger.description = 'Updates an existing National Dex Pokémon card. Requires admin role.'
+    #swagger.parameters['id'] = {
+        in: 'path',
+        description: 'MongoDB ObjectId of the card',
+        required: true,
+        type: 'string'
+    }
+    #swagger.responses[200] = { description: 'Dex entry updated' }
+    #swagger.responses[400] = { description: 'Invalid ID format or validation error' }
+    #swagger.responses[401] = { description: 'Not authenticated' }
+    #swagger.responses[403] = { description: 'Not authorized (admin only)' }
+    #swagger.responses[404] = { description: 'Dex entry not found' }
+    #swagger.responses[500] = { description: 'Internal Server Error' }
 */
 router.put('/:id', authenticate, authorize('admin'), validateObjectId, validate(nationalDexSchema), controller.updateDex);
  
@@ -92,6 +113,18 @@ router.put('/:id', authenticate, authorize('admin'), validateObjectId, validate(
     #swagger.tags = ['National Dex Cards']
     #swagger.summary = 'Delete a National Dex card'
     #swagger.description = 'Deletes a National Dex Pokémon card from the database. Requires admin role.'
+    #swagger.parameters['id'] = {
+        in: 'path',
+        description: 'MongoDB ObjectId of the card',
+        required: true,
+        type: 'string'
+    }
+    #swagger.responses[200] = { description: 'Dex entry deleted' }
+    #swagger.responses[400] = { description: 'Invalid ID format' }
+    #swagger.responses[401] = { description: 'Not authenticated' }
+    #swagger.responses[403] = { description: 'Not authorized (admin only)' }
+    #swagger.responses[404] = { description: 'Dex entry not found' }
+    #swagger.responses[500] = { description: 'Internal Server Error' }
 */
 router.delete('/:id', authenticate, authorize('admin'), validateObjectId, controller.deleteDex);
  
