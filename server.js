@@ -27,11 +27,15 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   next();
 });
-
+app.set('trust proxy', 1);
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production', // requires HTTPS in production
+    sameSite: 'lax' // allows the cookie to survive the GitHub redirect back to your site
+  }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
