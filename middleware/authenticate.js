@@ -1,24 +1,11 @@
-const jwt = require('jsonwebtoken');
-
-// Verifies the JWT sent in the Authorization header.
-// Expects header format: Authorization: Bearer <token>
+// Session-based authentication check (replaces JWT check).
+// Passport populates req.isAuthenticated() and req.user automatically
+// once a user has logged in via GitHub.
 const authenticate = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'No token provided. Format: Bearer <token>' });
+  if (req.isAuthenticated && req.isAuthenticated()) {
+    return next();
   }
-
-  const token = authHeader.split(' ')[1];
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    // decoded contains: id, email, role
-    req.user = decoded;
-    next();
-  } catch (err) {
-    return res.status(401).json({ message: 'Invalid or expired token' });
-  }
+  return res.status(401).json({ message: 'You do not have access' });
 };
-
+ 
 module.exports = authenticate;
